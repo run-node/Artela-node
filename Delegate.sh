@@ -90,7 +90,12 @@ function check_wallet() {
 
 # 设置密码功能
 function set_password() {
-  read -p "请输入创建节点时的密码(自动质押需要输入密码,否则无法自动执行): " new_pwd
+    # 检查 ~/.bash_profile 是否存在，如果不存在则创建
+    if [ ! -f ~/.bash_profile ]; then
+        touch ~/.bash_profile
+    fi
+
+    read -p "请输入创建节点时的密码(自动质押需要输入密码,否则无法自动执行): " new_pwd
 
     # 检查 ~/.bash_profile 中是否已存在 art_pwd，如果存在则替换为新密码，如果不存在则追加
     if grep -q '^art_pwd=' ~/.bash_profile; then
