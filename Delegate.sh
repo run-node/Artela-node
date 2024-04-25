@@ -158,19 +158,20 @@ function set_password() {
 function main_menu() {
   clear
   echo "=====================专用脚本 盗者必究==========================="
-  echo "需要测试网节点部署托管 技术指导 脚本请联系Telegram :https://t.me/linzeusasa"
-  echo "需要测试网节点部署托管 技术指导 脚本请联系Wechat :llkkxx001"
+  echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Telegram :https://t.me/linzeusasa"
+  echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Wechat :llkkxx001"
   echo "1. 安装基础环境"
-  echo "2. 配置Artela节点信息"
-  echo "3. 开始自动质押Art代币"
-  echo "4. 查询Artela钱包列表"
+  echo "2. 查询Artela钱包信息"
+  echo "3. 配置Artela节点信息"
+  echo "4. 开始自动质押Art代币"
   read -p "请输入选项（1-3）: " OPTION
 
   case $OPTION in
   1) install_expect ;;
-  2) set_password ;;
-  3) delegate_staking ;;
-  4) check_wallet ;;
+  2) check_wallet ;;
+  3) set_password ;;
+  4) delegate_staking ;;
+
   *) echo "无效选项。" ;;
   esac
 }
