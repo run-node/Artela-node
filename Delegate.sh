@@ -68,7 +68,7 @@ function delegate_staking() {
 
 
   # 输出信息
-  echo "------------自动质押已开启；每日晚上9点~10点执行------------"
+  echo "===========================自动质押已开启；每日晚上9点~10点执行==========================="
 
   read -p "按回车键返回主菜单"
 
@@ -109,7 +109,7 @@ function set_password() {
     echo "art_wallet=$wallet_name" >> ~/.bash_profile
     fi
 
-    echo "请输入密码，获取钱包地址"
+    echo "正在查询钱包地址"
     # 检查 ~/.bash_profile 中是否已存在 art_address，如果存在则替换为新地址，如果不存在则追加
     if grep -q '^art_address=' ~/.bash_profile; then
     art_address=$(artelad keys show $wallet_name -a)
@@ -120,7 +120,7 @@ function set_password() {
     echo "art_address=$art_address" >> ~/.bash_profile
     echo "钱包地址为: $art_address"
     fi
-
+    echo "正在查询验证者地址"
     # 检查 ~/.bash_profile 中是否已存在 art_validator，如果存在则替换为新验证器，如果不存在则追加
     if grep -q '^art_validator=' ~/.bash_profile; then
     art_validator=$(artelad keys show $wallet_name --bech val -a)
