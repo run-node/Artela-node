@@ -4,8 +4,10 @@ spawn artelad tx staking delegate \$validator $amountart --from \$address --chai
 expect "Enter keyring passphrase (attempt 1/3):"
 send "\$pwd\\n"
 expect {
-  -re {confirm transaction before signing and broadcasting \[y/N\]:\s*$} {
-    send "y\\n"
-    exp_continue
-  }
+    -re {confirm transaction before signing and broadcasting \[y/N\]:\s*$} {
+        send "y\n"
+        exp_continue
+    }
+    eof
+}
 '
