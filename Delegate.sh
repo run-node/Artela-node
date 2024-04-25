@@ -78,7 +78,7 @@ function delegate_staking() {
 
 # 查询钱包列表功能
 function check_wallet() {
-    echo "请输入创建节点时的密码:"
+    echo "正在查询中，请稍等"
     artelad keys list
 
     read -p "按回车键返回主菜单"
