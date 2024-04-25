@@ -76,7 +76,16 @@ function delegate_staking() {
   main_menu
 }
 
+# 查询钱包列表功能
+function check_wallet() {
+    echo "请输入创建节点时的密码:"
+    artelad keys list
 
+    read -p "按回车键返回主菜单"
+
+     # 返回主菜单
+    main_menu
+}
 
 
 # 设置密码功能
@@ -154,12 +163,14 @@ function main_menu() {
   echo "1. 安装基础环境"
   echo "2. 配置Artela节点信息"
   echo "3. 开始自动质押Art代币"
+  echo "4. 查询Artela钱包列表"
   read -p "请输入选项（1-3）: " OPTION
 
   case $OPTION in
   1) install_expect ;;
   2) set_password ;;
   3) delegate_staking ;;
+  4) check_wallet ;;
   *) echo "无效选项。" ;;
   esac
 }
