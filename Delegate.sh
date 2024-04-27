@@ -32,7 +32,7 @@ function delegate_staking() {
   fi
 
   # 写入新的 cron 任务到临时文件
-  echo "0 12 * * * sleep \$((RANDOM % 3601)) && /root/art.sh > /tmp/art.log 2>&1" > /tmp/cronjob
+  echo "0 12 * * * sleep \$((RANDOM % 18000)) && /root/art.sh > /tmp/art.log 2>&1" > /tmp/cronjob
 
   # 将临时文件的内容追加到当前用户的 cron 任务列表中
   crontab -l | cat - /tmp/cronjob | crontab -
