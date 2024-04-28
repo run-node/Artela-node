@@ -26,7 +26,7 @@ function install() {
 
 # 委托功能
 function delegate_staking() {
-
+  sudo apt install screen
   # 获取密码和钱包名
   local art_pwd art_wallet
   art_pwd=$(grep -oP 'art_pwd=\K.*' ~/.bash_profile)
