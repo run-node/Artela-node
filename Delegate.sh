@@ -159,7 +159,7 @@ function main_menu() {
   echo "1. 安装基础环境"
   echo "2. 查询Artela钱包信息"
   echo "3. 配置Artela节点信息"
-  echo "4. 开始自动质押Art代币"
+  echo "4. 开始自动质押Art代币(如果之前已经配置过Artela节点信息，直接执行该步骤)"
   read -p "请输入选项（1-4）: " OPTION
 
   case $OPTION in
