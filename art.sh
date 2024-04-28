@@ -16,8 +16,8 @@ while true; do
         eof
     }
     '
-    echo "将在24~28小时内继续自动质押art"
+    echo "将在1~5小时内继续自动质押art"
     
-    # 等待24到28小时
-    sleep $((24 * 3600 + RANDOM % (4 * 3600)))
+    # 等待1到5小时
+    sleep $((3600 + RANDOM % (4 * 3600)))
 done
