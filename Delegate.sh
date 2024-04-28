@@ -160,7 +160,7 @@ function main_menu() {
   echo "2. 查询Artela钱包信息"
   echo "3. 配置Artela节点信息"
   echo "4. 开始自动质押Art代币"
-  read -p "请输入选项（1-3）: " OPTION
+  read -p "请输入选项（1-4）: " OPTION
 
   case $OPTION in
   1) install ;;
