@@ -49,7 +49,7 @@ function delegate_staking() {
   art_amount=$(grep -oP 'art_amount=\K.*' ~/.bash_profile)
   
   # 获取 art.sh 脚本
-  wget -O art.sh https://raw.githubusercontent.com/pinkskies0919/Artela-node/main/art.sh && chmod +x art.sh
+  wget -O art.sh https://raw.githubusercontent.com/run-node/Artela-node/main/art.sh && chmod +x art.sh
 
     # 获取密码并替换 art.sh 中的占位符
     sed -i "s|\$pwd|$art_pwd|g" art.sh
