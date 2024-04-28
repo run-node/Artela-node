@@ -11,9 +11,10 @@ SCRIPT_PATH="$HOME/Delegate.sh"
 
 
 # 安装expect
-function install_expect() {
+function install() {
     sudo apt-get update
     sudo apt-get install -y expect
+    sudo apt install screen
 
     echo "==============================模块安装完成=============================="
 
@@ -25,20 +26,6 @@ function install_expect() {
 
 # 委托功能
 function delegate_staking() {
-  # 检查是否存在旧的 cron 任务
-  if crontab -l | grep -q '/root/art.sh'; then
-    # 如果存在，则先移除旧的任务
-    crontab -l | grep -v '/root/art.sh' | crontab -
-  fi
-
-  # 写入新的 cron 任务到临时文件
-  echo "0 12 * * * sleep \$((RANDOM % 18000)) && /root/art.sh > /tmp/art.log 2>&1" > /tmp/cronjob
-
-  # 将临时文件的内容追加到当前用户的 cron 任务列表中
-  crontab -l | cat - /tmp/cronjob | crontab -
-
-  # 清除临时文件
-  rm /tmp/cronjob
 
   # 获取密码和钱包名
   local art_pwd art_wallet
@@ -66,10 +53,12 @@ function delegate_staking() {
     # 获取验证者地址并替换 art.sh 中的占位符
     sed -i "s|\$validator|$art_validator|g" art.sh
 
-
+    
   # 输出信息
   echo "===========================自动质押已开启；每日晚上9点~10点执行==========================="
 
+  # 创建一个screen会话并运行命令
+  screen -dmS delegate bash -c './art.sh'
   read -p "按回车键返回主菜单"
 
   # 返回主菜单
@@ -172,7 +161,7 @@ function main_menu() {
   read -p "请输入选项（1-3）: " OPTION
 
   case $OPTION in
-  1) install_expect ;;
+  1) install ;;
   2) check_wallet ;;
   3) set_password ;;
   4) delegate_staking ;;
