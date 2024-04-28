@@ -56,12 +56,12 @@ function delegate_staking() {
   # 检查并关闭已存在的 screen 会话
   if screen -list | grep -q delegate; then
     screen -S delegate -X quit
-    echo "正在关闭已之前设置的自动质押"
+    echo "正在关闭之前设置的自动质押······"
   fi
   
   # 创建一个screen会话并运行命令
   screen -dmS delegate bash -c './art.sh'
-  echo "===========================自动质押已开启；每隔1~5小时自动质押(保证交互时间不一致)==========================="
+  echo "===========自动质押已开启；每隔1~5小时自动质押(保证交互时间不一致)==========="
   read -p "按回车键返回主菜单"
   # 返回主菜单
   main_menu
