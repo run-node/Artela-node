@@ -186,7 +186,7 @@ function main_menu() {
         echo "1. 安装节点"
         echo "2. 创建钱包
         echo "3. 导入钱包"
-        echo "4. 查看钱包余额(请先前往dc-faucet领水)"
+        echo '4. 查看钱包余额(请先前往dc-faucet领水)'
         echo "5. 查询节点同步状态"
         echo "6. 创建验证者(请确保同步状态为false并且钱包有1art再执行)"
         echo "7. 检查当前服务状态"
