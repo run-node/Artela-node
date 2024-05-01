@@ -205,7 +205,7 @@ function main_menu() {
         7) check_service_status ;;
         8) view_logs ;;
         9) uninstall_node ;;
-        10）Delegate ;; 
+        10) Delegate ;; 
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
