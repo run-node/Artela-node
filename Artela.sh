@@ -84,7 +84,9 @@ function install_node() {
     # 获取初始文件和地址簿
     curl -L https://snapshots-testnet.nodejumper.io/artela-testnet/genesis.json > $HOME/.artelad/config/genesis.json
     curl -L https://snapshots-testnet.nodejumper.io/artela-testnet/addrbook.json > $HOME/.artelad/config/addrbook.json
-
+    
+    #来自大赌哥的快照
+    wget https://smeby.fun/artelad-addrbook.json -O $HOME/.artelad/config/addrbook.json
     # 配置节点
     SEEDS=""
     PEERS="096d8b3a2fe79791ef307935e0b72afcf505b149@84.247.140.122:24656,a01a5d0015e685655b1334041d907ce2db51c02f@173.249.16.25:45656,8542e4e88e01f9c95db2cd762460eecad2d66583@155.133.26.10:26656,dd5d35fb496afe468dd35213270b02b3a415f655@15.235.144.20:30656,8510929e6ba058e84019b1a16edba66e880744e1@217.76.50.155:656,f16f036a283c5d2d77d7dc564f5a4dc6cf89393b@91.190.156.180:42656,6554c18f24455cf1b60eebcc8b311a693371881a@164.68.114.21:45656,301d46637a338c2855ede5d2a587ad1f366f3813@95.217.200.98:18656"
@@ -100,7 +102,11 @@ function install_node() {
     
     # 下载快照
     curl https://testnet-files.itrocket.net/artela/snap_artela.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.artelad
+    curl -L https://smeby.fun/artelad_snapshots.tar.lz4 | tar -I lz4 -xf - -C $HOME/.artelad/data
 
+    mv $HOME/.artelad/priv_validator_state.json.backup $HOME/.artelad/data/priv_validator_state.json
+
+pm2 restart artelad
     # 使用 PM2 启动节点进程
 
     pm2 restart artelad
