@@ -119,6 +119,10 @@ function view_logs() {
     pm2 logs artelad
 }
 
+function restart() {
+    pm2 restart artelad
+}
+
 # 卸载节点功能
 function uninstall_node() {
             echo "开始卸载Artela节点..."
@@ -183,19 +187,20 @@ function main_menu() {
     while true; do
         clear
         echo "========================自用脚本 盗者必究========================="
-        echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Telegram :https://t.me/linzeusasa"
-        echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Wechat :llkkxx001"
+    echo "需要测试网节点部署托管 技术指导 部署领水质押脚本 请联系Telegram :https://t.me/linzeusasa"
+    echo "需要测试网节点部署托管 技术指导 部署领水质押脚本 请联系Wechat :llkkxx001"
         echo "===================Artela最新测试网节点一键部署===================="
         echo "未安装过Artela节点的请创建新钱包，若已有Artela钱包 请执行第三步"
         echo "网址为https://testnet.itrocket.net/artela/staking 请前往网站输入钱包地址 查询验证者信息"
-        echo "请选择要执行的功能(1~11):"
+        echo "请选择要执行的功能:"
         echo "1. 安装节点"
         echo "2. 钱包管理"
         echo "3. 查询信息"
         echo "4. 创建验证者(请确保同步状态为false并且钱包有1art再执行)"
-        echo "5. 卸载节点"
-        echo "6. 自动质押"
-        read -p "请输入选项（1-6）: " OPTION
+        echo "5. 重启节点"
+        echo "6. 卸载节点"
+        echo "7. 自动质押"
+        read -p "请输入选项（1-7）: " OPTION
 
         case $OPTION in
         1) install_node ;;
@@ -230,8 +235,9 @@ function main_menu() {
             esac
             ;;
         4) add_validator ;;
-        5) uninstall_node ;;
-        6) Delegate ;; 
+        5) restart ;;
+        6) uninstall_node ;;
+        7) Delegate ;; 
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
