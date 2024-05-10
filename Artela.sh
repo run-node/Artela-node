@@ -143,6 +143,10 @@ function check_balances() {
     artelad query bank balances "$wallet_address"
 }
 
+function walletlist() {
+    artelad keys list
+}
+
 # 查看节点同步状态
 function check_sync_status() {
     artelad status 2>&1 --node $Artela_RPC_PORT | jq .SyncInfo
@@ -186,28 +190,48 @@ function main_menu() {
         echo "网址为https://testnet.itrocket.net/artela/staking 请前往网站输入钱包地址 查询验证者信息"
         echo "请选择要执行的功能(1~11):"
         echo "1. 安装节点"
-        echo "2. 创建钱包"
-        echo "3. 导入钱包"
-        echo "4. 查看钱包余额(请先前往dc-faucet领水)"
-        echo "5. 查询节点同步状态"
-        echo "6. 创建验证者(请确保同步状态为false并且钱包有1art再执行)"
-        echo "7. 检查当前服务状态"
-        echo "8. 查询日志"
-        echo "9. 卸载节点"
-        echo "10. 自动质押"
-        read -p "请输入选项（1-10）: " OPTION
+        echo "2. 钱包管理"
+        echo "3. 查询信息"
+        echo "4. 创建验证者(请确保同步状态为false并且钱包有1art再执行)"
+        echo "5. 卸载节点"
+        echo "6. 自动质押"
+        read -p "请输入选项（1-6）: " OPTION
 
         case $OPTION in
         1) install_node ;;
-        2) add_wallet ;;
-        3) import_wallet ;;
-        4) check_balances ;;
-        5) check_sync_status ;;
-        6) add_validator ;;
-        7) check_service_status ;;
-        8) view_logs ;;
-        9) uninstall_node ;;
-        10) Delegate ;; 
+        2)
+            echo "=========================钱包管理菜单============================"
+            echo "请选择要执行的操作:"
+            echo "1. 创建钱包"
+            echo "2. 导入钱包"
+            echo "3. 钱包列表"
+            read -p "请输入选项（1-2）: " WALLET_OPTION
+            case $WALLET_OPTION in
+            1) add_wallet ;;
+            2) import_wallet ;;
+            3) walletlist ;;
+            *) echo "无效选项。" ;;
+            esac
+            ;;
+        3)
+            echo "=========================查询信息菜单============================"
+            echo "请选择要执行的操作:"
+            echo "1. 查看钱包地址余额(请先前往dc-faucet领水)"
+            echo "2. 查看节点同步状态"
+            echo "3. 查看节点运行状态"
+            echo "4. 查看节点运行日志"
+            read -p "请输入选项（1-4）: " INFO_OPTION
+            case $INFO_OPTION in
+            1) check_balances ;;
+            2) check_sync_status ;;
+            3) check_service_status ;;
+            4) view_logs ;;
+            *) echo "无效选项。" ;;
+            esac
+            ;;
+        4) add_validator ;;
+        5) uninstall_node ;;
+        6) Delegate ;; 
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
