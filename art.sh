@@ -17,6 +17,7 @@ while true; do
     }
     '
     echo "将在1~5小时内继续自动质押art"
+    echo "当前时间（UTC+8）: $current_time"
     
     # 等待1到5小时
     sleep $((10800 + RANDOM % 25200))
