@@ -17,6 +17,7 @@ while true; do
     }
     '
     echo "将在1~5小时内继续自动质押art"
+    current_time=$(TZ=UTC-8 date +"%Y-%m-%d %H:%M:%S")
     echo "当前时间（UTC+8）: $current_time"
     
     # 等待1到5小时
