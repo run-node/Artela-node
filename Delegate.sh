@@ -34,11 +34,11 @@ function delegate_staking() {
 
   # 获取密码和钱包名
   local art_pwd art_wallet
-  art_pwd=$(grep -oP 'art_pwd=\K.*' ~/.bash_profile)
-  art_wallet=$(grep -oP 'art_wallet=\K.*' ~/.bash_profile)
-  art_address=$(grep -oP 'art_address=\K.*' ~/.bash_profile)
-  art_validator=$(grep -oP 'art_validator=\K.*' ~/.bash_profile)
-  art_amount=$(grep -oP 'art_amount=\K.*' ~/.bash_profile)
+  art_pwd=$(grep -oP 'art_pwd=\K.*' ~/.bashrc)
+  art_wallet=$(grep -oP 'art_wallet=\K.*' ~/.bashrc)
+  art_address=$(grep -oP 'art_address=\K.*' ~/.bashrc)
+  art_validator=$(grep -oP 'art_validator=\K.*' ~/.bashrc)
+  art_amount=$(grep -oP 'art_amount=\K.*' ~/.bashrc)
   
   # 获取 art.sh 脚本
   wget -O art.sh https://raw.githubusercontent.com/run-node/Artela-node/main/art.sh && chmod +x art.sh
@@ -56,7 +56,17 @@ function delegate_staking() {
     sed -i "s|\$address|$art_address|g" art.sh
 
     # 获取验证者地址并替换 art.sh 中的占位符
-    sed -i "s|\$validator|$art_validator|g" art.sh    
+    sed -i "s|\$validator|$art_validator|g" art.sh   
+
+    # 获取port并替换 air.sh 中的占位符
+    Artela_RPC_PORT=$(grep -m 1 -E '^export Artela_RPC_PORT=' .bash_profile | cut -d= -f2-)
+    # 如果未找到 Artela_RPC_PORT 参数，则设置默认值
+    if [ -z "$Artela_RPC_PORT" ]; then
+        Artela_RPC_PORT="tcp://47.254.66.177:26657"
+    fi
+
+    # 替换占位符
+    sed -i "s|\$Artela_RPC_PORT|$Artela_RPC_PORT|g" air.sh
 
   # 检查并关闭已存在的 screen 会话
   if screen -list | grep -q delegate; then
@@ -87,65 +97,65 @@ function check_wallet() {
 
 # 设置密码功能
 function set_password() {
-    # 检查 ~/.bash_profile 是否存在，如果不存在则创建
-    if [ ! -f ~/.bash_profile ]; then
-        touch ~/.bash_profile
+    # 检查 ~/.bashrc 是否存在，如果不存在则创建
+    if [ ! -f ~/.bashrc ]; then
+        touch ~/.bashrc
     fi
 
     read -p "请输入创建节点时的密码(自动质押需要输入密码,否则无法自动执行): " new_pwd
 
-    # 检查 ~/.bash_profile 中是否已存在 art_pwd，如果存在则替换为新密码，如果不存在则追加
-    if grep -q '^art_pwd=' ~/.bash_profile; then
-    sed -i "s|^art_pwd=.*$|art_pwd=$new_pwd|" ~/.bash_profile
+    # 检查 ~/.bashrc 中是否已存在 art_pwd，如果存在则替换为新密码，如果不存在则追加
+    if grep -q '^art_pwd=' ~/.bashrc; then
+    sed -i "s|^art_pwd=.*$|art_pwd=$new_pwd|" ~/.bashrc
     else
-    echo "art_pwd=$new_pwd" >> ~/.bash_profile
+    echo "art_pwd=$new_pwd" >> ~/.bashrc
     fi
 
     # 输入钱包名
     read -p "请输入钱包名: " wallet_name
 
-    # 检查 ~/.bash_profile 中是否已存在 art_wallet，如果存在则替换为新钱包名，如果不存在则追加
-    if grep -q '^art_wallet=' ~/.bash_profile; then
-    sed -i "s|^art_wallet=.*$|art_wallet=$wallet_name|" ~/.bash_profile
+    # 检查 ~/.bashrc 中是否已存在 art_wallet，如果存在则替换为新钱包名，如果不存在则追加
+    if grep -q '^art_wallet=' ~/.bashrc; then
+    sed -i "s|^art_wallet=.*$|art_wallet=$wallet_name|" ~/.bashrc
     else
-    echo "art_wallet=$wallet_name" >> ~/.bash_profile
+    echo "art_wallet=$wallet_name" >> ~/.bashrc
     fi
 
     echo "正在查询钱包地址"
-    # 检查 ~/.bash_profile 中是否已存在 art_address，如果存在则替换为新地址，如果不存在则追加
-    if grep -q '^art_address=' ~/.bash_profile; then
+    # 检查 ~/.bashrc 中是否已存在 art_address，如果存在则替换为新地址，如果不存在则追加
+    if grep -q '^art_address=' ~/.bashrc; then
     art_address=$(artelad keys show $wallet_name -a)
-    sed -i "s|^art_address=.*$|art_address=$art_address|" ~/.bash_profile
+    sed -i "s|^art_address=.*$|art_address=$art_address|" ~/.bashrc
     echo "钱包地址为: $art_address"
     else
     art_address=$(artelad keys show $wallet_name -a)
-    echo "art_address=$art_address" >> ~/.bash_profile
+    echo "art_address=$art_address" >> ~/.bashrc
     echo "钱包地址为: $art_address"
     fi
     echo "正在查询验证者地址"
-    # 检查 ~/.bash_profile 中是否已存在 art_validator，如果存在则替换为新验证器，如果不存在则追加
-    if grep -q '^art_validator=' ~/.bash_profile; then
+    # 检查 ~/.bashrc 中是否已存在 art_validator，如果存在则替换为新验证器，如果不存在则追加
+    if grep -q '^art_validator=' ~/.bashrc; then
     art_validator=$(artelad keys show $wallet_name --bech val -a)
-    sed -i "s|^art_validator=.*$|art_validator=$art_validator|" ~/.bash_profile
+    sed -i "s|^art_validator=.*$|art_validator=$art_validator|" ~/.bashrc
     echo "验证者地址为: $art_validator"
     else
     art_validator=$(artelad keys show $wallet_name --bech val -a)
-    echo "art_validator=$art_validator" >> ~/.bash_profile
+    echo "art_validator=$art_validator" >> ~/.bashrc
     echo "验证者地址为: $art_validator"
     fi
 
     
     # 输入质押数量
-  read -p "请输入每次自动质押时的数量: " amount
+  read -p "请输入每次自动质押时的数量(建议1个): " amount
 
-    # 检查 ~/.bash_profile 中是否已存在 art_wallet，如果存在则替换为新钱包名，如果不存在则追加
-    if grep -q '^art_amount=' ~/.bash_profile; then
-    sed -i "s|^art_amount=.*$|art_amount=$amount|" ~/.bash_profile
+    # 检查 ~/.bashrc 中是否已存在 art_wallet，如果存在则替换为新钱包名，如果不存在则追加
+    if grep -q '^art_amount=' ~/.bashrc; then
+    sed -i "s|^art_amount=.*$|art_amount=$amount|" ~/.bashrc 
     else
-    echo "art_amount=$amount" >> ~/.bash_profile
+    echo "art_amount=$amount" >> ~/.bashrc 
     fi
 
-  echo "参数已设置成功，并写入到 ~/.bash_profile 文件中"
+  echo "参数已设置成功，并写入到 ~/.bashrc  文件中"
 
   read -p "按回车键返回主菜单"
 
@@ -153,7 +163,9 @@ function set_password() {
   main_menu
 }
 
-
+function check_logs(){
+screen -r delegate
+}
 
 
 # 主菜单
@@ -166,13 +178,15 @@ function main_menu() {
   echo "2. 查询Artela钱包信息"
   echo "3. 配置Artela节点信息"
   echo "4. 开始自动质押Art代币(如果之前已经配置过Artela节点信息，直接执行该步骤)"
-  read -p "请输入选项（1-4）: " OPTION
+  echo "5. 查询质押日志(关闭会话时请执行Ctrl+A 然后D 如果操作失误请重新执行第4步)"
+  read -p "请输入选项（1-5）: " OPTION
 
   case $OPTION in
   1) install ;;
   2) check_wallet ;;
   3) set_password ;;
   4) delegate_staking ;;
+  5) check_logs ;;
 
   *) echo "无效选项。" ;;
   esac
