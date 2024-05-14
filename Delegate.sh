@@ -58,7 +58,7 @@ function delegate_staking() {
     # 获取验证者地址并替换 art.sh 中的占位符
     sed -i "s|\$validator|$art_validator|g" art.sh   
 
-    # 获取port并替换 air.sh 中的占位符
+    # 获取port并替换 art.sh 中的占位符
     Artela_RPC_PORT=$(grep -m 1 -E '^export Artela_RPC_PORT=' .bash_profile | cut -d= -f2-)
     # 如果未找到 Artela_RPC_PORT 参数，则设置默认值
     if [ -z "$Artela_RPC_PORT" ]; then
@@ -66,7 +66,7 @@ function delegate_staking() {
     fi
 
     # 替换占位符
-    sed -i "s|\$Artela_RPC_PORT|$Artela_RPC_PORT|g" air.sh
+    sed -i "s|\$Artela_RPC_PORT|$Artela_RPC_PORT|g" art.sh
 
   # 检查并关闭已存在的 screen 会话
   if screen -list | grep -q delegate; then
