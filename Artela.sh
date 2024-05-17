@@ -99,11 +99,10 @@ function install_node() {
     pm2 start artelad -- start && pm2 save && pm2 startup
     
     # 下载快照
-    SNAP_NAME=$(curl -s https://ss-t.artela.nodestake.org/ | egrep -o ">20.*\.tar.lz4" | tr -d ">")
-    curl -o - -L https://ss-t.artela.nodestake.org/${SNAP_NAME}  | lz4 -c -d - | tar -x -C $HOME/.artelad
+    artelad tendermint unsafe-reset-all --home $HOME/.artelad --keep-addr-book
+    curl https://snapshots-testnet.nodejumper.io/artela-testnet/artela-testnet_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.artelad
     mv $HOME/.artelad/priv_validator_state.json.backup $HOME/.artelad/data/priv_validator_state.json
 
-pm2 restart artelad
     # 使用 PM2 启动节点进程
 
     pm2 restart artelad
@@ -185,6 +184,24 @@ function Delegate(){
     wget -O Delegate.sh https://raw.githubusercontent.com/run-node/Artela-node/main/Delegate.sh && chmod +x Delegate.sh && ./Delegate.sh
 }
 
+function download(){
+
+curl -L https://smeby.fun/artelad_snapshots.tar.lz4 | tar -I lz4 -xf - -C $HOME/.artelad/data
+
+mv $HOME/.artelad/priv_validator_state.json.backup $HOME/.artelad/data/priv_validator_state.json
+
+pm2 restart artelad
+}
+
+function update(){
+wget https://smeby.fun/artelad-addrbook.json -O $HOME/.artelad/config/addrbook.json && pm2 restart artelad
+}
+
+function backup(){
+mkdir -p $HOME/0g_key && cp /root/.0gchain/config/priv_validator_key.json $HOME/0g_key && cp /root/.0gchain/config/node_key.json $HOME/0g_key
+
+}
+
 # 主菜单
 function main_menu() {
     while true; do
@@ -203,7 +220,10 @@ function main_menu() {
         echo "5. 重启节点"
         echo "6. 卸载节点"
         echo "7. 自动质押"
-        read -p "请输入选项（1-7）: " OPTION
+        echo "8. 下载快照"
+        echo "9. 更新addrbook"
+        echo "10. 备份private_key到root/0g_key目录"
+        read -p "请输入选项（1-10）: " OPTION
 
         case $OPTION in
         1) install_node ;;
@@ -241,6 +261,9 @@ function main_menu() {
         5) restart ;;
         6) uninstall_node ;;
         7) Delegate ;; 
+        8) download ;;
+        9) update ;;
+        10) backup ;;
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
