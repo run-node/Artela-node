@@ -173,7 +173,6 @@ function main_menu() {
   clear
   echo "=====================专用脚本 盗者必究==========================="
   echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Telegram :https://t.me/linzeusasa"
-  echo "需要测试网节点部署托管 技术指导 定制脚本 请联系Wechat :llkkxx001"
   echo "1. 安装基础环境"
   echo "2. 查询Artela钱包信息"
   echo "3. 配置Artela节点信息"
