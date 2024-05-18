@@ -207,8 +207,7 @@ function main_menu() {
     while true; do
         clear
         echo "========================自用脚本 盗者必究========================="
-    echo "需要测试网节点部署托管 技术指导 部署领水质押脚本 请联系Telegram :https://t.me/linzeusasa"
-    echo "需要测试网节点部署托管 技术指导 部署领水质押脚本 请联系Wechat :llkkxx001"
+        echo "需要测试网节点部署托管 技术指导 部署领水质押脚本 请联系Telegram :https://t.me/linzeusasa"
         echo "===================Artela最新测试网节点一键部署===================="
         echo "未安装过Artela节点的请创建新钱包，若已有Artela钱包 请执行第三步"
         echo "网址为https://testnet.itrocket.net/artela/staking 请前往网站输入钱包地址 查询验证者信息"
