@@ -202,6 +202,11 @@ mkdir -p $HOME/0g_key && cp /root/.0gchain/config/priv_validator_key.json $HOME/
 
 }
 
+function evm(){
+read -p "请输入你的钱包名称: " wallet_name
+echo "0x$(artelad debug addr $(artelad keys show $wallet_name -a) | grep hex | awk '{print $3}')"
+}
+
 # 主菜单
 function main_menu() {
     while true; do
@@ -232,11 +237,13 @@ function main_menu() {
             echo "1. 创建钱包"
             echo "2. 导入钱包"
             echo "3. 钱包列表"
+            echo "3. 查询领水evm地址"
             read -p "请输入选项（1-2）: " WALLET_OPTION
             case $WALLET_OPTION in
             1) add_wallet ;;
             2) import_wallet ;;
             3) walletlist ;;
+            4) evm ;;
             *) echo "无效选项。" ;;
             esac
             ;;
